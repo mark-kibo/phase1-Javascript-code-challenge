@@ -27,7 +27,7 @@ let gradeNumber;
 while(true){
     gradeNumber= prompt("Enter a number in the range 0-100: ");
     
-    // verify if input is actually a number and lies in the range 0-100
+    // verify if input is actually a number, lies in the range 0-100 and the number is a positive value
     if(isFinite(gradeNumber) && parseInt(gradeNumber) <= 100 && parseInt(gradeNumber) >= 0){
         console.log(parseInt(gradeNumber))
         break;
