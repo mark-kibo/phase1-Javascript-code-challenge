@@ -3,13 +3,15 @@
 <p>
 This project consists of three apps: Student Grade Generator, Speed Detector, and Net Salary Calculator. Each app serves a specific purpose and provides functionality related to its respective topic.</p>
     1. Student Grade Generator: This app allows you to calculate the percentage and grade of a student based on their marks. It follows a specific formula to determine the percentage and assigns a grade accordingly.
+
     2. Speed Detector: The Speed Detector app helps you determine the speed of a moving object. By providing the distance and time taken, it calculates the speed and displays the result.
+    
     3. Net Salary Calculator: This app enables you to calculate the net salary of an employee. It takes into account factors such as gross salary, deductions, and taxes to provide an accurate net salary amount.
 
 ## Project Setup
-To set up and run the JavaScript Code Challenge project, follow these steps:
+<p>To set up and run the JavaScript Code Challenge project, follow these steps:</p>
 
-    Clone the project repository from `https://github.com/mark-kibo/phase1-Javascript-code-challenge`.
+    <p>Clone the project repository from</p> `https://github.com/mark-kibo/phase1-Javascript-code-challenge`.
 
     Install any necessary dependencies by running the following command in your terminal:
 
