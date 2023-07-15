@@ -25,11 +25,11 @@ let gradeNumber;
 
 // create a while loop to prompt user for a number.Breaks if the user inputs a number otherwise, it continues
 while(true){
-    gradeNumber= prompt("Enter a number in the range 0-100: ");
+    gradeNumber= parseInt(prompt("Enter a number in the range 0-100: "));
     
     // verify if input is actually a number, lies in the range 0-100 and the number is a positive value
-    if(isFinite(gradeNumber) && parseInt(gradeNumber) <= 100 && parseInt(gradeNumber) >= 0){
-        console.log(parseInt(gradeNumber))
+    if(Number.isInteger(gradeNumber) && gradeNumber <= 100 && gradeNumber >= 0){
+        console.log(gradeNumber)
         break;
     }
 
@@ -38,7 +38,7 @@ while(true){
 
 
 // finally get our grade from the gradegenerator function
-let mygrade=gradeGenerator(parseInt(gradeNumber));
+let mygrade=gradeGenerator(gradeNumber);
 
 // print my result
 console.log(`Your grade is ${mygrade}`);
