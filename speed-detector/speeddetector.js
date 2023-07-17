@@ -24,7 +24,7 @@ const speedDetector=(speed)=>{
         if (points > 12){
             return "License suspended";
         }else{
-            return points;
+            return `Your demerit points are ${points}`;
         }
 
     }
@@ -41,7 +41,6 @@ while(true){
     
     // verify if input is actually a number and the number is a positive value since speed cant be a negative value
     if(Number.isInteger(speed) && speed >= 0){
-        console.log(speed);
         break;
     }
 

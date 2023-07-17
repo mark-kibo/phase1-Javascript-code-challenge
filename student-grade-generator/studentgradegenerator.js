@@ -32,7 +32,6 @@ while(true){
     
     // verify if input is actually a number, lies in the range 0-100 and the number is a positive value
     if(Number.isInteger(gradeNumber) && gradeNumber <= 100 && gradeNumber >= 0){
-        console.log(gradeNumber)
         break;
     }
 
