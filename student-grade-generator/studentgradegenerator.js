@@ -1,3 +1,6 @@
+// import my prompt method to allow node to ask for input
+const prompt = require('prompt-sync')({sigint: true});
+
 // create a function that returns grade based on the grade number
 const gradeGenerator = (number)=>{
     // declare our constant grades and our result

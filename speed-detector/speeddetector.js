@@ -1,3 +1,6 @@
+// import my prompt method to allow node to ask for input
+const prompt = require('prompt-sync')({sigint: true});
+
 // create a function that takes in speed as argument and returns points if speed > 70
 // returns ok if speed  < 70  and finally will return license suspende if points > 12
 

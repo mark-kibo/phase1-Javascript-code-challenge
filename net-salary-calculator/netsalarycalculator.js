@@ -1,24 +1,34 @@
+// import my prompt method to allow node to ask for input
+const prompt = require('prompt-sync')({sigint: true});
+
+
 // create function that calculates payee tax nhif , nssf deductions, net salary
-function netSalaryCalculator(basicSalary){
+function netSalaryCalculator(basicSalary, benefits){
     // create a fixed variable for first tax of salary above 24000, insurance rate, secondtax rate and personalreleif
     const firstTax=2400;
     const secondTaxrate =0.25;
     const personalRelief=2400;
-    let nssfContribution =getNssfContribution(basicSalary);
-    let nhifContribution=getNhifContribution(basicSalary);
     let nhifRelief= 0;
     let payeeTax =0;
     let netSalary=0;
+    let grossSalary;
     let result={};
 
+    // get my gross salary which is basic salary + benefits
+    grossSalary = basicSalary + benefits;
+
+    // get my contributions nssf and nhif
+    let nssfContribution =getNssfContribution(grossSalary);
+    let nhifContribution=getNhifContribution(grossSalary);
 
     // calculate taxable income
-    let taxableIncome= basicSalary - nssfContribution;
+    let taxableIncome= grossSalary - nssfContribution;
+    console.log(taxableIncome);
     
     // check if salary is > 24000
     if(basicSalary > 24000){
         // set values to use
-        nhifRelief=getNhifInsuranceRelief(basicSalary);
+        nhifRelief=getNhifInsuranceRelief(grossSalary);
 
         // calculate first and second tax
         let secondTax = (taxableIncome - 24000 ) * secondTaxrate;
@@ -27,7 +37,7 @@ function netSalaryCalculator(basicSalary){
         // minus deductions 
         payeeTax= (finalTax - personalRelief) - nhifRelief;
         // get net pay
-        netSalary =basicSalary -(nssfContribution + payeeTax + nhifContribution);
+        netSalary =grossSalary -(nssfContribution + payeeTax + nhifContribution);
 
         result = Object.assign({}, {"PAYE ":payeeTax, 
                                     "NSSF CONTRIBUTION":nssfContribution, 
@@ -37,7 +47,7 @@ function netSalaryCalculator(basicSalary){
 
     }else{
         // get net pay
-        netSalary = basicSalary -(nssfContribution - nhifContribution);
+        netSalary = grossSalary -(nssfContribution - nhifContribution);
         if (Number.isInteger(netSalary)){
         }else{
             netSalary=0;
@@ -60,51 +70,51 @@ function netSalaryCalculator(basicSalary){
 
 
 // set Nssf rate based on the new rate
-function getNssfContribution(basicSalary){
+function getNssfContribution(grossSalary){
     let nssfRelief;
-    if(basicSalary > 18000){
+    if(grossSalary > 18000){
         nssfRelief = 18000 * 0.06;
     }else{
-        nssfRelief =  basicSalary * 0.06;
+        nssfRelief =  grossSalary * 0.06;
     }
     return nssfRelief;
 }
 
 
 // return nhif based on nhif rate table
-function getNhifContribution(basicSalary){
+function getNhifContribution(grossSalary){
     let amount;
-    if (basicSalary >= 5999 && basicSalary <= 7999) {
+    if (grossSalary >= 5999 && grossSalary <= 7999) {
         amount = 300;
-    } else if (basicSalary >= 8000 && basicSalary <= 11999) {
+    } else if (grossSalary >= 8000 && grossSalary <= 11999) {
         amount = 400;
-    } else if (basicSalary >= 12000 && basicSalary <= 14999) {
+    } else if (grossSalary >= 12000 && grossSalary <= 14999) {
         amount = 500;
-    } else if (basicSalary >= 15000 && basicSalary <= 19999) {
+    } else if (grossSalary >= 15000 && grossSalary <= 19999) {
         amount = 600;
-    } else if (basicSalary >= 20000 && basicSalary <= 24999) {
+    } else if (grossSalary >= 20000 && grossSalary <= 24999) {
         amount = 750;
-    } else if (basicSalary >= 25000 && basicSalary <= 29999) {
+    } else if (grossSalary >= 25000 && grossSalary <= 29999) {
         amount = 850;
-    } else if (basicSalary >= 30000 && basicSalary <= 34999) {
+    } else if (grossSalary >= 30000 && grossSalary <= 34999) {
         amount = 900;
-    } else if (basicSalary >= 35000 && basicSalary <= 39999) {
+    } else if (grossSalary >= 35000 && grossSalary <= 39999) {
         amount = 950;
-    } else if (basicSalary >= 40000 && basicSalary <= 44999) {
+    } else if (grossSalary >= 40000 && grossSalary <= 44999) {
         amount = 1000;
-    } else if (basicSalary >= 45000 && basicSalary <= 49999) {
+    } else if (grossSalary >= 45000 && grossSalary <= 49999) {
         amount = 1100;
-    } else if (basicSalary >= 50000 && basicSalary <= 59999) {
+    } else if (grossSalary >= 50000 && grossSalary <= 59999) {
         amount = 1200;
-    } else if (basicSalary >= 60000 && basicSalary <= 69999) {
+    } else if (grossSalary >= 60000 && grossSalary <= 69999) {
         amount = 1300;
-    } else if (basicSalary >= 70000 && basicSalary <= 79999) {
+    } else if (grossSalary >= 70000 && grossSalary <= 79999) {
         amount = 1400;
-    } else if (basicSalary >= 80000 && basicSalary <= 89999) {
+    } else if (grossSalary >= 80000 && grossSalary <= 89999) {
         amount = 1500;
-    } else if (basicSalary >= 90000 && basicSalary <= 99999) {
+    } else if (grossSalary >= 90000 && grossSalary <= 99999) {
         amount = 1600;
-    } else if (basicSalary >= 100000) {
+    } else if (grossSalary >= 100000) {
         amount = 1700;
     }else{
         amount=150;
@@ -117,8 +127,8 @@ function getNhifContribution(basicSalary){
 
 // calculate nhif relief using the current rate 0.15 of nhif contribution
 
-function getNhifInsuranceRelief(basicSalary){
-    let nhifContribution= getNhifContribution(basicSalary);
+function getNhifInsuranceRelief(salary){
+    let nhifContribution= getNhifContribution(salary);
     let relief = 0.15 * nhifContribution;
 
     return relief;
@@ -128,14 +138,16 @@ function getNhifInsuranceRelief(basicSalary){
 
 
 // get user input
-let grossSalary;
+let basicSalary;
+let benefits = 0;
 // create a while loop to prompt user for a salary.Breaks if the user inputs a number otherwise, it continues
 while(true){
-    grossSalary= parseInt(prompt("Enter gross salary: "));
+    basicSalary= parseInt(prompt("Enter gross salary: "));
+    benefits= parseInt(prompt("Enter benefits: "));
     
     // verify if input is actually a number and the number is a positive value
-    if(Number.isInteger(grossSalary) && grossSalary >= 0){
-        console.log(grossSalary);
+    if(Number.isInteger(basicSalary) && basicSalary >= 0){
+        console.log(basicSalary);
         break;
     }
 
@@ -144,5 +156,5 @@ while(true){
 
 // finally call the netsalary calculator function and pass in my salary
 
-let output=netSalaryCalculator(grossSalary);
+let output=netSalaryCalculator(basicSalary, benefits);
 console.log(output);
