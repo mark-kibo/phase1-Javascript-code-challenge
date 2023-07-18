@@ -24,7 +24,6 @@ function netSalaryCalculator(basicSalary, benefits){
 
     // calculate taxable income
     let taxableIncome= grossSalary - nssfContribution;
-    console.log(taxableIncome);
     
     // check if salary is > 24000
     if(basicSalary > 24000){
@@ -60,7 +59,7 @@ function netSalaryCalculator(basicSalary, benefits){
 
     }else{
         // get net pay
-        netSalary = grossSalary -(nssfContribution - nhifContribution);
+        netSalary = grossSalary -(nssfContribution +  nhifContribution);
         if (Number.isInteger(netSalary)){
         }else{
             netSalary=0;
@@ -160,7 +159,7 @@ while(true){
     
     // verify if input is actually a number and the number is a positive value
     if(Number.isInteger(basicSalary) && basicSalary >= 0){
-        console.log(basicSalary);
+        console.log(`This is the ${basicSalary}`);
         break;
     }
 
