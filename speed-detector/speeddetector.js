@@ -14,7 +14,7 @@ const speedDetector=(speed)=>{
         // divide the exceeded speed by five since a demerit point is given on every 5km/s of exceed limit
         let demeritPoints=(speed-70)/5;
         // perform a check to see if the points is a whole number, if not rounddown the points
-        if (Number.isInteger(points)){
+        if (Number.isInteger(demeritpoints)){
             points=demeritPoints
         }else{
             points =Math.floor(demeritPoints);
