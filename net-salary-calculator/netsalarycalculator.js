@@ -6,7 +6,8 @@ const prompt = require('prompt-sync')({sigint: true});
 function netSalaryCalculator(basicSalary, benefits){
     // create a fixed variable for first tax of salary above 24000, insurance rate, secondtax rate and personalreleif
     const firstTax=2400;
-    const secondTaxrate =0.25;
+    const secondTaxRate =0.25;
+    const thirdTaxRate = 0.3;
     const personalRelief=2400;
     let nhifRelief= 0;
     let payeeTax =0;
@@ -29,10 +30,22 @@ function netSalaryCalculator(basicSalary, benefits){
     if(basicSalary > 24000){
         // set values to use
         nhifRelief=getNhifInsuranceRelief(grossSalary);
+        let firstPayeeTax = 2400;
+        let secondPayeeTax;
+        let thirdPayeeTax;
+        let thirdTax;
 
         // calculate first and second tax
-        let secondTax = (taxableIncome - 24000 ) * secondTaxrate;
-        let finalTax= firstTax + secondTax;
+        let secondTax = (taxableIncome - 24000 );
+        if (secondTax > 8333){
+            secondPayeeTax = 8333 * secondTaxRate;
+            thirdTax = secondTax -8333;
+            thirdPayeeTax = thirdTax * thirdTaxRate;
+            finalTax = firstPayeeTax +secondPayeeTax + thirdPayeeTax;
+        }else{
+            secondPayeeTax = secondTax * secondTaxRate;
+            finalTax= firstPayeeTax + secondPayeeTax;
+        }
 
         // minus deductions 
         payeeTax= (finalTax - personalRelief) - nhifRelief;
